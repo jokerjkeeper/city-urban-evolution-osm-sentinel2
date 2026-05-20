@@ -27,16 +27,18 @@ YEAR_END   = 2025
 
 # ─── Display config ───────────────────────────────────────────────────────────
 INDICATOR_LABELS = {
-    "amenity_count":    "Amenity Count (N_am)",
-    "building_count":   "Building Count (N_bld)",
-    "building_coverage":"Building Coverage (ρ_b)",
-    "building_area_mean":"Mean Bldg Area (Ā_bld)",
-    "edge_density":     "Edge Density (ρ_e)",
-    "poi_diversity":    "POI Diversity (H_POI)",
-    "shop_count":       "Shop Count (N_sh)",
-    "road_length_total":"Road Length (L_road)",
-    "texture_entropy":  "Texture Entropy (H_tex)",
-    "leisure_count":    "Leisure Count (N_lei)",
+    "amenity_count":      "Amenity Count (N_am)",
+    "building_count":     "Building Count (N_bld)",
+    "building_coverage":  "Building Coverage (rho_b)",
+    "building_area_mean": "Mean Bldg Area (A_bld)",
+    "edge_density":       "Edge Density (rho_e)",
+    "poi_diversity":      "POI Diversity (H_POI)",
+    "shop_count":         "Shop Count (N_sh)",
+    "road_length_total":  "Road Length (L_road)",
+    "texture_entropy":    "Texture Entropy (H_tex)",
+    "leisure_count":      "Leisure Count (N_lei)",
+    "ssim":               "SSIM",
+    "resnet_cosine_dist": "ResNet Cosine Dist",
 }
 
 CITY_COLORS = {
@@ -65,8 +67,8 @@ def fig3_structural_break():
     # ── Choose indicators present in both cities ──────────────────────────────
     tc_inds = set(tc["indicator"])
     tp_inds = set(tp["indicator"])
-    shared   = sorted(tc_inds & tp_inds,
-                      key=lambda x: tc.set_index("indicator").loc[x, "best_break_year"])
+    tc_break = tc.drop_duplicates("indicator").set_index("indicator")["best_break_year"]
+    shared   = sorted(tc_inds & tp_inds, key=lambda x: tc_break.get(x, 9999))
 
     n_inds = len(shared)
     fig, ax = plt.subplots(figsize=(13, max(5, n_inds * 0.75 + 2)))
@@ -109,7 +111,8 @@ def fig3_structural_break():
 
             # Break point marker
             ax.scatter(brk, y_pos, s=90, color=color, alpha=alpha,
-                       zorder=5, edgecolors="white", linewidths=1.2)
+                       zorder=5, edgecolors="white" if sig else color,
+                       linewidths=1.2)
 
             # F-stat annotation (significant only)
             if sig:
