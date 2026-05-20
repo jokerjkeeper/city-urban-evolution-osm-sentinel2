@@ -23,6 +23,8 @@ from matplotlib.gridspec import GridSpec
 from matplotlib.lines import Line2D
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from analysis.spatial_autocorr import run_spatial_autocorr
@@ -340,97 +342,203 @@ def fig2_morans_i(city_data: dict):
     plt.close()
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# Fig 4 — PCA 碎石圖（雙城市）
-# ═══════════════════════════════════════════════════════════════════════════════
 
-def fig4_pca_scree(city_data: dict):
-    """
-    繪製 PCA 碎石圖（雙城市），含解釋方差柱狀 + 累積曲線。
-    左子圖 = Taichung，右子圖 = Taipei，便於直接比較維度結構。
-    """
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+# Fig 4 — PCA 碼石圖 + K-Means 驗證（雙城市，2×2 layout）
+# ═
+
+def _build_trajectory_matrix(panel):
+    """把 panel 轉成寬格式軌跡矩陣並標準化，返回 X_scaled, wide。"""
     feature_cols = [
         "edge_density", "building_coverage", "texture_entropy",
         "building_count", "building_area_mean", "amenity_count",
         "shop_count", "leisure_count", "poi_diversity", "road_length_total",
     ]
-    short_labels = {
-        "Edge Density": "EdgeDen",
-        "Building Coverage": "BldCov",
-        "Texture Entropy": "TexEnt",
-        "Building Count": "BldCnt",
-        "Building Area Mean": "BldArea",
-        "Amenity Count": "AmeCnt",
-        "Shop Count": "ShpCnt",
-        "Leisure Count": "LeisCnt",
-        "Poi Diversity": "POIDiv",
-        "Road Length Total": "RoadLen",
-    }
+    existing = [c for c in feature_cols if c in panel.columns]
+    pivot_frames = []
+    for col in existing:
+        pv = panel.pivot_table(index=["lon", "lat"], columns="year", values=col)
+        pv.columns = [f"{col}_{y}" for y in pv.columns]
+        pivot_frames.append(pv)
+    wide = pd.concat(pivot_frames, axis=1).fillna(0)
+    X_scaled = StandardScaler().fit_transform(wide)
+    return X_scaled, wide
 
-    fig = plt.figure(figsize=(16, 7))
+
+def fig4_pca_scree(city_data: dict):
+    """
+    2x2 Fig 4:
+      (a)(b) PCA scree plots (Taichung / Taipei)
+      (c)    K-Means Elbow plot (WCSS, dual city)
+      (d)    K-Means Silhouette plot (dual city)
+    """
+    K_RANGE = range(2, 9)
+    city_colors = {"Taichung": PALETTE["blue"], "Taipei": PALETTE["orange"]}
+
+    fig = plt.figure(figsize=(16, 14))
     fig.patch.set_facecolor("white")
-    gs = GridSpec(1, 2, wspace=0.40)
+    gs = GridSpec(2, 2, hspace=0.42, wspace=0.40)
 
-    for col_idx, (city_name, (panel, _, _)) in enumerate(city_data.items()):
-        existing = [c for c in feature_cols if c in panel.columns]
-        years = sorted(panel["year"].unique())
+    # Pre-compute trajectory matrices
+    traj_data = {}
+    for city_name, (panel, _, _) in city_data.items():
+        X_scaled, wide = _build_trajectory_matrix(panel)
+        traj_data[city_name] = (X_scaled, wide)
 
-        # 建立寬格式矩陣（每格點一行，指標x年份展開）
-        pivot_frames = []
-        for col in existing:
-            pv = panel.pivot_table(index=["lon", "lat"], columns="year", values=col)
-            pv.columns = [f"{col}_{y}" for y in pv.columns]
-            pivot_frames.append(pv)
-        wide = pd.concat(pivot_frames, axis=1).fillna(0)
-
-        scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(wide)
+    # (a)(b) PCA scree
+    for col_idx, (city_name, (X_scaled, wide)) in enumerate(traj_data.items()):
         n_comp = min(wide.shape[0] - 1, wide.shape[1])
         pca = PCA(n_components=n_comp, random_state=42)
         pca.fit(X_scaled)
-
         ev_ratio = pca.explained_variance_ratio_
         cum_var  = np.cumsum(ev_ratio)
         n_show   = min(20, n_comp)
+        x_pos    = np.arange(1, n_show + 1)
 
-        ax1 = fig.add_subplot(gs[col_idx])
-        x_pos = np.arange(1, n_show + 1)
-
-        # 柱狀：解釋方差
+        ax1 = fig.add_subplot(gs[0, col_idx])
         bar_colors = [PALETTE["blue"] if i < 5 else PALETTE["gray"]
                       for i in range(n_show)]
         ax1.bar(x_pos, ev_ratio[:n_show] * 100, color=bar_colors, alpha=0.85,
                 width=0.6, edgecolor="white", linewidth=0.8, zorder=3)
 
-        # 數字標籤（前 6 個）
         for i, (x, v) in enumerate(zip(x_pos[:6], ev_ratio[:6] * 100)):
             ax1.text(x, v + 0.5, f"{v:.1f}%", ha="center", va="bottom",
                      fontsize=9, color=PALETTE["blue"], fontweight="bold")
 
-        # 折線：累積方差
         ax2_twin = ax1.twinx()
         ax2_twin.plot(x_pos, cum_var[:n_show] * 100, "o-",
-                      color=PALETTE["orange"], linewidth=2.2, markersize=5,
-                      label="Cumulative variance", zorder=4)
+                      color=PALETTE["orange"], linewidth=2.2, markersize=5, zorder=4)
         ax2_twin.fill_between(x_pos, 0, cum_var[:n_show] * 100,
                               alpha=0.08, color=PALETTE["orange"])
 
-        # 門檻線
-        for thresh, label_txt, thresh_col in [
-            (80, "80%", "#059669"), (90, "90%", "#7C3AED")
-        ]:
+        for thresh, thresh_col in [(80, "#059669"), (90, "#7C3AED")]:
             ax2_twin.axhline(thresh, color=thresh_col, linewidth=1.5,
                              linestyle="--", alpha=0.7, zorder=2)
             ax2_twin.text(n_show + 0.2, thresh, f"{thresh}%",
                           fontsize=10, color=thresh_col, va="center")
-            # 標示對應的 PC 數
             n_thresh = int(np.searchsorted(cum_var, thresh / 100) + 1)
             if n_thresh <= n_show:
                 ax1.axvline(n_thresh + 0.5, color=thresh_col, linewidth=1.2,
                             linestyle="--", alpha=0.5, zorder=2)
                 ax1.text(n_thresh + 0.6, ev_ratio[0] * 95, f"d={n_thresh}",
-                         fontsize=9, color=thresh_col, va="top",
-                         fontweight="bold")
+                         fontsize=9, color=thresh_col, va="top", fontweight="bold")
 
         ax1.set_xlim(0.4, n_show + 0.6)
         ax1.set_ylim(0, ev_ratio[0] * 110)
@@ -447,19 +555,16 @@ def fig4_pca_scree(city_data: dict):
         ax1.spines[["top", "right"]].set_visible(False)
 
         subplot_label = "(a)" if city_name == "Taichung" else "(b)"
-        n_pts = wide.shape[0]
-        n_features = wide.shape[1]
         ax1.set_title(
-            f"{subplot_label} {city_name} \u2014 PCA on {n_pts}-Point "
-            f"Trajectory Matrix ({n_features}\u00d7{n_pts})",
+            f"{subplot_label} {city_name} — PCA Scree "
+            f"({wide.shape[0]} points × {wide.shape[1]} features)",
             fontsize=11, pad=8
         )
 
-        # 圖例（只在左子圖顯示一次）
         if col_idx == 0:
             handles = [
                 mpatches.Patch(color=PALETTE["blue"], alpha=0.85,
-                               label="Individual variance (selected PCs)"),
+                               label="Individual variance (top PCs)"),
                 mpatches.Patch(color=PALETTE["gray"], alpha=0.5,
                                label="Individual variance (remaining)"),
                 Line2D([0], [0], color=PALETTE["orange"], linewidth=2.2,
@@ -468,14 +573,77 @@ def fig4_pca_scree(city_data: dict):
             ax1.legend(handles=handles, fontsize=9, loc="upper right",
                        framealpha=0.9, edgecolor="#E2E8F0")
 
+    # (c) Elbow plot
+    ax_elbow = fig.add_subplot(gs[1, 0])
+    ax_elbow.set_facecolor("#F8FAFC")
+
+    for city_name, (X_scaled, _) in traj_data.items():
+        wcss = []
+        for k in K_RANGE:
+            km = KMeans(n_clusters=k, random_state=42, n_init=10)
+            km.fit(X_scaled)
+            wcss.append(km.inertia_)
+        color = city_colors[city_name]
+        ls = "-" if city_name == "Taichung" else "--"
+        ax_elbow.plot(list(K_RANGE), wcss, marker="o", color=color,
+                      linewidth=2.2, markersize=7, linestyle=ls,
+                      label=city_name, zorder=4)
+        idx4 = list(K_RANGE).index(4)
+        ax_elbow.scatter([4], [wcss[idx4]], s=140, color=color,
+                         edgecolors="white", linewidths=2, zorder=5)
+
+    ax_elbow.axvline(4, color="#6B7280", linewidth=1.2, linestyle=":",
+                     alpha=0.7, zorder=2)
+    ymax = ax_elbow.get_ylim()[1]
+    ax_elbow.text(4.1, ymax * 0.97, "K=4 selected",
+                  fontsize=9, color="#6B7280", va="top")
+    ax_elbow.set_xlabel("Number of Clusters (K)", fontsize=11, labelpad=5)
+    ax_elbow.set_ylabel("Within-Cluster Sum of Squares", fontsize=11, labelpad=5)
+    ax_elbow.set_xticks(list(K_RANGE))
+    ax_elbow.spines[["top", "right"]].set_visible(False)
+    ax_elbow.legend(fontsize=10, framealpha=0.9, edgecolor="#E2E8F0")
+    ax_elbow.set_title("(c) K-Means Elbow Plot", fontsize=11, pad=8)
+
+    # (d) Silhouette plot
+    ax_sil = fig.add_subplot(gs[1, 1])
+    ax_sil.set_facecolor("#F8FAFC")
+
+    for city_name, (X_scaled, _) in traj_data.items():
+        sil_scores = []
+        for k in K_RANGE:
+            km = KMeans(n_clusters=k, random_state=42, n_init=10)
+            labels = km.fit_predict(X_scaled)
+            sil_scores.append(silhouette_score(X_scaled, labels))
+        color = city_colors[city_name]
+        ls = "-" if city_name == "Taichung" else "--"
+        ax_sil.plot(list(K_RANGE), sil_scores, marker="s", color=color,
+                    linewidth=2.2, markersize=7, linestyle=ls,
+                    label=city_name, zorder=4)
+        idx4 = list(K_RANGE).index(4)
+        ax_sil.scatter([4], [sil_scores[idx4]], s=140, color=color,
+                       edgecolors="white", linewidths=2, zorder=5)
+        ax_sil.text(4.12, sil_scores[idx4], f"s={sil_scores[idx4]:.3f}",
+                    fontsize=8.5, color=color, va="center")
+
+    ax_sil.axvline(4, color="#6B7280", linewidth=1.2, linestyle=":",
+                   alpha=0.7, zorder=2)
+    ax_sil.set_xlabel("Number of Clusters (K)", fontsize=11, labelpad=5)
+    ax_sil.set_ylabel("Silhouette Score", fontsize=11, labelpad=5)
+    ax_sil.set_xticks(list(K_RANGE))
+    ax_sil.spines[["top", "right"]].set_visible(False)
+    ax_sil.legend(fontsize=10, framealpha=0.9, edgecolor="#E2E8F0")
+    ax_sil.set_title("(d) K-Means Silhouette Scores", fontsize=11, pad=8)
+
     fig.suptitle(
-        "Fig 4 \u2014 PCA Scree Plot: Variance Explained (Taichung vs Taipei)",
-        fontsize=14, fontweight="bold", y=1.02
+        "Fig 4 — PCA Dimensionality Reduction and K-Means Cluster Validation "
+        "(Taichung vs Taipei)",
+        fontsize=14, fontweight="bold", y=1.01
     )
     out = VIZ_DIR / "fig4_pca_scree.png"
     fig.savefig(out, dpi=DPI, bbox_inches="tight")
     print(f"[Fig 4] Saved: {out}")
     plt.close()
+
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
