@@ -1,7 +1,4 @@
 # Data (too large for git)
-output/
-osm_data/
-data/raw/
 *.geojson
 *.tif
 *.tiff
