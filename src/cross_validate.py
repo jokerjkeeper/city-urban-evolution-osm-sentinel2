@@ -101,9 +101,15 @@ def flag_inconsistent_locations(panel: pd.DataFrame) -> pd.DataFrame:
 
 
 def main():
-    panel_path = OUTPUT_DIR / "panel_data.csv"
+    import argparse
+    parser = argparse.ArgumentParser(description="OSM-CV 交叉驗證")
+    parser.add_argument("city", nargs="?", default="taichung", help="城市 key (預設 taichung)")
+    args = parser.parse_args()
+    city_key = args.city
+
+    panel_path = OUTPUT_DIR / f"panel_data_{city_key}.csv"
     if not panel_path.exists():
-        print("找不到 panel_data.csv，請先執行 features/build_features.py")
+        print(f"找不到 {panel_path.name}，請先執行 src/build_features.py")
         return
 
     panel = pd.read_csv(panel_path)
@@ -123,7 +129,7 @@ def main():
     consist_df = delta_consistency(panel)
     if len(consist_df) > 0:
         print(consist_df.to_string(index=False))
-        consist_df.to_csv(OUTPUT_DIR / "delta_consistency.csv", index=False)
+        consist_df.to_csv(OUTPUT_DIR / f"delta_consistency_{city_key}.csv", index=False)
     else:
         print("(delta 數據不足，僅兩個年份時第一年無 delta)")
 

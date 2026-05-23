@@ -11,20 +11,20 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = PROJECT_ROOT / "output"
 
 
-def build_panel_from_dir(data_dir: Path = None) -> pd.DataFrame:
+def build_panel_from_dir(data_dir: Path = None, city: str = "taichung") -> pd.DataFrame:
     """從指定目錄讀取 CSV 並合併為面板數據（支持多城市）"""
     d = data_dir or OUTPUT_DIR
-    return build_panel(d / "cv_metrics.csv", d / "osm_metrics.csv", d / "cv_change_metrics.csv")
+    return build_panel(d / f"cv_metrics_{city}.csv", d / f"osm_metrics_{city}.csv", d / f"cv_change_metrics_{city}.csv")
 
 
-def build_panel(cv_path: Path = None, osm_path: Path = None, change_path: Path = None) -> pd.DataFrame:
+def build_panel(cv_path: Path = None, osm_path: Path = None, change_path: Path = None, city: str = "taichung") -> pd.DataFrame:
     """
-    讀取 cv_metrics.csv + osm_metrics.csv + cv_change_metrics.csv，
+    讀取 cv_metrics_{city}.csv + osm_metrics_{city}.csv + cv_change_metrics_{city}.csv，
     合併為統一面板數據。
     """
-    cv_path = cv_path or OUTPUT_DIR / "cv_metrics.csv"
-    osm_path = osm_path or OUTPUT_DIR / "osm_metrics.csv"
-    change_path = change_path or OUTPUT_DIR / "cv_change_metrics.csv"
+    cv_path = cv_path or OUTPUT_DIR / f"cv_metrics_{city}.csv"
+    osm_path = osm_path or OUTPUT_DIR / f"osm_metrics_{city}.csv"
+    change_path = change_path or OUTPUT_DIR / f"cv_change_metrics_{city}.csv"
 
     df_cv = pd.read_csv(cv_path)
     df_osm = pd.read_csv(osm_path)
@@ -100,10 +100,16 @@ def compute_delta_features(panel: pd.DataFrame) -> pd.DataFrame:
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="面板數據整合")
+    parser.add_argument("city", nargs="?", default="taichung", help="城市 key (預設 taichung)")
+    args = parser.parse_args()
+    city_key = args.city
+
     OUTPUT_DIR.mkdir(exist_ok=True)
 
     print("建構面板數據...")
-    panel = build_panel()
+    panel = build_panel(city=city_key)
     print(f"面板形狀: {panel.shape}")
     print(f"欄位: {panel.columns.tolist()}")
     print(panel.head(5))
@@ -111,7 +117,7 @@ def main():
     print("\n計算變化量 (delta)...")
     panel_delta = compute_delta_features(panel)
 
-    out_path = OUTPUT_DIR / "panel_data.csv"
+    out_path = OUTPUT_DIR / f"panel_data_{city_key}.csv"
     panel_delta.to_csv(out_path, index=False)
     print(f"\n已儲存: {out_path}  ({len(panel_delta)} 筆)")
 

@@ -1,0 +1,11 @@
+indicator,n_years,series_mean,series_std,S,Var_S,Z_MK,p_value,trend,Sen_slope
+shop_count,8,1.23141,0.245076,28,65.3333,3.34,0.0008,increasing,0.112179
+amenity_count,8,3.461538,0.69945,28,65.3333,3.34,0.0008,increasing,0.282051
+building_count,8,56.094872,37.13644,26,65.3333,3.093,0.002,increasing,14.937179
+poi_diversity,8,0.325671,0.043909,26,65.3333,3.093,0.002,increasing,0.017884
+building_area_mean,8,1160.542726,250.72936,-24,65.3333,-2.846,0.0044,decreasing,-118.341397
+edge_density,8,0.105177,0.064757,17,64.3333,1.995,0.0461,increasing,0.014247
+texture_entropy,8,2.335897,1.350278,13,64.3333,1.496,0.1346,no trend,0.039559
+building_coverage,8,0.178945,0.103869,13,64.3333,1.496,0.1346,no trend,0.006509
+resnet_cosine_dist,7,0.389719,0.319802,-7,44.3333,-0.901,0.3675,no trend,-0.017075
+ssim,7,0.385668,0.336954,3,44.3333,0.3,0.7639,no trend,0.004855

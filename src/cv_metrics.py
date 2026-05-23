@@ -184,26 +184,33 @@ def main():
     years = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
 
     # 1. 單幀指標
-    print("=" * 50)
-    print(f"計算 {city_key} 單幀 CV 指標...")
-    print("=" * 50)
-    df_metrics = build_cv_metrics(raw_dir, years)
     out_path = output_dir / f"cv_metrics_{city_key}.csv"
-    df_metrics.to_csv(out_path, index=False)
-    print(f"\n已儲存: {out_path}  ({len(df_metrics)} 筆)")
-    print(df_metrics.groupby("year")[["edge_density", "building_coverage", "texture_entropy"]].mean())
+    if out_path.exists():
+        print(f"[SKIP] 單幀 CV 指標已存在，略過計算: {out_path}")
+        df_metrics = pd.read_csv(out_path)
+    else:
+        print("=" * 50)
+        print(f"計算 {city_key} 單幀 CV 指標...")
+        print("=" * 50)
+        df_metrics = build_cv_metrics(raw_dir, years)
+        df_metrics.to_csv(out_path, index=False)
+        print(f"\n已儲存: {out_path}  ({len(df_metrics)} 筆)")
+        print(df_metrics.groupby("year")[["edge_density", "building_coverage", "texture_entropy"]].mean())
 
     # 2. 跨年份變化指標
-    print("\n" + "=" * 50)
-    print(f"計算 {city_key} 跨年份變化指標 (SSIM + ResNet)...")
-    print("=" * 50)
-    year_pairs = [(2018, 2019), (2019, 2020), (2020, 2021), (2021, 2022), (2022, 2023), (2023, 2024), (2024, 2025)]
-    df_change = build_change_metrics(raw_dir, year_pairs)
     out_path2 = output_dir / f"cv_change_metrics_{city_key}.csv"
-    df_change.to_csv(out_path2, index=False)
-    print(f"\n已儲存: {out_path2}  ({len(df_change)} 筆)")
-    if len(df_change) > 0:
-        print(df_change[["ssim", "resnet_cosine_dist"]].describe())
+    if out_path2.exists():
+        print(f"[SKIP] 跨年份變化指標已存在，略過計算: {out_path2}")
+    else:
+        print("\n" + "=" * 50)
+        print(f"計算 {city_key} 跨年份變化指標 (SSIM + ResNet)...")
+        print("=" * 50)
+        year_pairs = [(2018, 2019), (2019, 2020), (2020, 2021), (2021, 2022), (2022, 2023), (2023, 2024), (2024, 2025)]
+        df_change = build_change_metrics(raw_dir, year_pairs)
+        df_change.to_csv(out_path2, index=False)
+        print(f"\n已儲存: {out_path2}  ({len(df_change)} 筆)")
+        if len(df_change) > 0:
+            print(df_change[["ssim", "resnet_cosine_dist"]].describe())
 
     print("\n完成！")
 

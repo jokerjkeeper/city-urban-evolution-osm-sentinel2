@@ -27,7 +27,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from analysis.spatial_autocorr import run_spatial_autocorr
+from src.spatial_autocorr import run_spatial_autocorr
 
 # ─── 路徑 ─────────────────────────────────────────────────────────────────────
 PROJECT_ROOT = Path(__file__).resolve().parent.parent

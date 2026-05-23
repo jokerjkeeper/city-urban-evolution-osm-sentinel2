@@ -252,9 +252,15 @@ def print_summary(df: pd.DataFrame, top_indicators: list[str] | None = None):
 # ─── main ────────────────────────────────────────────────────────────────────
 
 def main():
-    panel_path = OUTPUT_DIR / "panel_data.csv"
+    import argparse
+    parser = argparse.ArgumentParser(description="空間自相關分析")
+    parser.add_argument("city", nargs="?", default="taichung", help="城市 key (預設 taichung)")
+    args = parser.parse_args()
+    city_key = args.city
+
+    panel_path = OUTPUT_DIR / f"panel_data_{city_key}.csv"
     if not panel_path.exists():
-        print("[ERROR] 找不到 panel_data.csv，請先執行 features/build_features.py")
+        print(f"[ERROR] 找不到 {panel_path.name}，請先執行 src/build_features.py")
         return
 
     panel = pd.read_csv(panel_path)
@@ -275,7 +281,7 @@ def main():
         return
 
     # 輸出 CSV
-    out_path = OUTPUT_DIR / "spatial_autocorr.csv"
+    out_path = OUTPUT_DIR / f"spatial_autocorr_{city_key}.csv"
     result_df.to_csv(out_path, index=False)
     print(f"已儲存: {out_path}  ({len(result_df)} 筆)")
 

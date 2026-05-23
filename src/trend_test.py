@@ -291,9 +291,15 @@ def run_structural_break(
 # ─── main ────────────────────────────────────────────────────────────────────
 
 def main():
-    panel_path = OUTPUT_DIR / "panel_data.csv"
+    import argparse
+    parser = argparse.ArgumentParser(description="趨勢與結構突變點分析")
+    parser.add_argument("city", nargs="?", default="taichung", help="城市 key (預設 taichung)")
+    args = parser.parse_args()
+    city_key = args.city
+
+    panel_path = OUTPUT_DIR / f"panel_data_{city_key}.csv"
     if not panel_path.exists():
-        print("[ERROR] 找不到 panel_data.csv，請先執行 features/build_features.py")
+        print(f"[ERROR] 找不到 {panel_path.name}，請先執行 src/build_features.py")
         return
 
     panel = pd.read_csv(panel_path)
@@ -322,7 +328,7 @@ def main():
             print(f"  {row['indicator']:<26} {int(row['S']):>6} {row['Z_MK']:>7.3f} "
                   f"{row['p_value']:>7.4f}{sig:<3} {row['trend']:<14} {row['Sen_slope']:>12.6f}")
 
-        out_mk = OUTPUT_DIR / "trend_test.csv"
+        out_mk = OUTPUT_DIR / f"trend_test_{city_key}.csv"
         mk_df.to_csv(out_mk, index=False)
         print(f"\n已儲存: {out_mk}")
 
@@ -342,7 +348,7 @@ def main():
             print(f"  {row['indicator']:<26} {year_str:>10} {row['F_stat']:>10.3f} "
                   f"{row['p_value']:>8.4f}{sig}")
 
-        out_chow = OUTPUT_DIR / "structural_break.csv"
+        out_chow = OUTPUT_DIR / f"structural_break_{city_key}.csv"
         chow_df.to_csv(out_chow, index=False)
         print(f"\n已儲存: {out_chow}")
 

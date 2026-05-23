@@ -182,9 +182,15 @@ def run_bias_correction(
 # ─── main ────────────────────────────────────────────────────────────────────
 
 def main():
-    osm_path = OUTPUT_DIR / "osm_metrics.csv"
+    import argparse
+    parser = argparse.ArgumentParser(description="OSM 偏誤校正")
+    parser.add_argument("city", nargs="?", default="taichung", help="城市 key (預設 taichung)")
+    args = parser.parse_args()
+    city_key = args.city
+
+    osm_path = OUTPUT_DIR / f"osm_metrics_{city_key}.csv"
     if not osm_path.exists():
-        print("[ERROR] 找不到 osm_metrics.csv，請先執行 osm/fetch_osm.py")
+        print(f"[ERROR] 找不到 {osm_path.name}，請先執行 src/fetch_osm.py")
         return
 
     osm = pd.read_csv(osm_path)
@@ -232,12 +238,12 @@ def main():
         lambda_=DEFAULT_LAMBDA,
     )
 
-    out_path = OUTPUT_DIR / "osm_bias_corrected.csv"
+    out_path = OUTPUT_DIR / f"osm_bias_corrected_{city_key}.csv"
     corrected_df.to_csv(out_path, index=False)
     print(f"\n已儲存: {out_path}  ({len(corrected_df)} 筆)")
 
     # ─ 5. 靈敏度分析 CSV ─────────────────────────────────────────────────────
-    sens_out = OUTPUT_DIR / "osm_bias_sensitivity.csv"
+    sens_out = OUTPUT_DIR / f"osm_bias_sensitivity_{city_key}.csv"
     sens_df.to_csv(sens_out, index=False)
     print(f"已儲存: {sens_out}")
 

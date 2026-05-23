@@ -1,0 +1,5 @@
+cv_delta,osm_delta,consistency_rate,pearson_r,p_value
+d_edge_density,d_building_count,0.367,0.0718,0.008
+d_building_coverage,d_building_count,0.328,0.0547,0.0433
+d_texture_entropy,d_amenity_count,0.145,0.0783,0.0038
+d_edge_density,d_road_length_total,0.001,-0.0923,0.0006
