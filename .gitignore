@@ -29,3 +29,5 @@ Thumbs.db
 *.synctex.gz
 *.spl
 *.toc
+
+raw_images/
